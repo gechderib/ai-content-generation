@@ -1,0 +1,185 @@
+{
+  "version": "1.0",
+  "title": "The Starting Price",
+  "audience": "Young Ethiopians and diaspora friends, watching on phones",
+  "intent": "Smile at the embarrassment, recognise their own family, remember that a price is a starting offer",
+  "language": "en",
+  "style_block": "warm soft hand-painted illustration, gentle grain, golden afternoon light, small Ethiopian town, no text, no letters, no numbers, vertical-friendly centred composition",
+  "character_sheet": {
+    "description": "a small boy about 8 years old, short black hair, yellow t-shirt, faded blue shorts, painterly illustration, shown from behind or at a distance, no detailed face",
+    "supporting": [
+      "the mother: an adult woman in a cream patterned shawl, shown only from behind, in silhouette, or as hands",
+      "the shop owner: an adult man in a dark waistcoat, shown only as a silhouette or hands"
+    ],
+    "reference_image": "outputs/reference/golden.png"
+  },
+  "music": {
+    "caption": "gentle warm acoustic score, soft plucked strings, light hand percussion, nostalgic, tender, no lead melody, no vocals",
+    "bpm": 80,
+    "instrumental": true,
+    "seed": 42
+  },
+  "end_card": { "text": "Made with AI", "duration_s": 2.5 },
+  "shots": [
+    {
+      "id": "s01",
+      "reason": "Establish the small town and the street of boutiques",
+      "duration_s": 7,
+      "shot_type": "wide",
+      "image_prompt": "a small-town street lined with tiny boutiques, jeans and clothes hanging in the doorways, a small boy and his mother walking away from the camera",
+      "motion_prompt": "slow gentle push-in, soft dust in the light",
+      "overlay_text": null,
+      "narration": {
+        "text": "When I was a kid, my mother took me to a street of small boutiques in our town.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "When I was a kid, my mother took me to a street of small boutiques in our town.",
+      "seed": 1001
+    },
+    {
+      "id": "s02",
+      "reason": "The want: the boy spots the jeans",
+      "duration_s": 6,
+      "shot_type": "medium",
+      "image_prompt": "the small boy seen from behind pointing at a pair of blue jeans hanging in a boutique doorway",
+      "motion_prompt": "slow gentle push-in, fixed framing",
+      "overlay_text": null,
+      "narration": {
+        "text": "She asked which one I liked. I pointed at a pair of jeans.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "She asked which one I liked. I pointed at a pair of jeans.",
+      "seed": 1002
+    },
+    {
+      "id": "s03",
+      "reason": "The negotiation starts: owner names 2000",
+      "duration_s": 7,
+      "shot_type": "medium",
+      "image_prompt": "the mother seen from behind facing the shop owner in silhouette inside a small boutique, jeans on the wall",
+      "motion_prompt": "very slow push-in, soft light flicker",
+      "overlay_text": "2000 ETB",
+      "narration": {
+        "text": "She asked the owner the price. Two thousand birr, he said.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "She asked the owner the price. Two thousand birr, he said.",
+      "seed": 1003
+    },
+    {
+      "id": "s04",
+      "reason": "Her counter-offer: 300",
+      "duration_s": 6,
+      "shot_type": "insert",
+      "image_prompt": "close-up of the mother's calm hand with a small gesture, warm light, shop counter",
+      "motion_prompt": "slight hand movement, camera static",
+      "overlay_text": "300 ETB",
+      "narration": {
+        "text": "My mother said, three hundred.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "My mother said, three hundred.",
+      "seed": 1004
+    },
+    {
+      "id": "s05",
+      "reason": "The boy's embarrassment",
+      "duration_s": 6,
+      "shot_type": "medium",
+      "image_prompt": "the small boy seen from behind near the shop door, head bowed, shoulders shrunk, bright street beyond",
+      "motion_prompt": "slow pull-back, soft light",
+      "overlay_text": null,
+      "narration": {
+        "text": "I wanted the ground to swallow me.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "I wanted the ground to swallow me.",
+      "seed": 1005
+    },
+    {
+      "id": "s06",
+      "reason": "The owner resists",
+      "duration_s": 6,
+      "shot_type": "insert",
+      "image_prompt": "the shop owner's raised open hands in a refusing gesture, silhouette, warm shop light",
+      "motion_prompt": "slight hand movement, camera static",
+      "overlay_text": null,
+      "narration": {
+        "text": "That's not possible, the owner said.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "That's not possible, the owner said.",
+      "seed": 1006
+    },
+    {
+      "id": "s07",
+      "reason": "The turn: the walk-away (climax)",
+      "duration_s": 7,
+      "shot_type": "medium",
+      "image_prompt": "the mother seen from behind turning toward the shop door, shawl swinging, bright street ahead",
+      "motion_prompt": "slow gentle track following her, soft wind",
+      "overlay_text": null,
+      "narration": {
+        "text": "Then I'm leaving, said my mother, and she turned to the door.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "Then I'm leaving, said my mother, and she turned to the door.",
+      "seed": 1007
+    },
+    {
+      "id": "s08",
+      "reason": "The price drops to 1000, she still refuses",
+      "duration_s": 6,
+      "shot_type": "medium",
+      "image_prompt": "the shop owner in silhouette with an outstretched hand calling after the mother, who shakes her head, seen from behind",
+      "motion_prompt": "slow gentle push-in, fixed framing",
+      "overlay_text": "1000 ETB",
+      "narration": {
+        "text": "One thousand, he called after her. She shook her head.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "One thousand, he called after her. She shook her head.",
+      "seed": 1008
+    },
+    {
+      "id": "s09",
+      "reason": "Resolution: the deal at 500",
+      "duration_s": 6,
+      "shot_type": "insert",
+      "image_prompt": "close-up of hands counting birr notes over a wooden counter, warm light, no text on the notes",
+      "motion_prompt": "slow gentle push-in, subtle hand movement",
+      "overlay_text": "500 ETB",
+      "narration": {
+        "text": "In the end, we bought them for five hundred.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "In the end, we bought them for five hundred.",
+      "seed": 1009
+    },
+    {
+      "id": "s10",
+      "reason": "The lesson, stated by the narrator",
+      "duration_s": 8,
+      "shot_type": "wide",
+      "image_prompt": "the small boy walking home from behind holding a paper bag, his mother beside him in silhouette, golden light on the street",
+      "motion_prompt": "slow pull-back, soft warm light",
+      "overlay_text": null,
+      "narration": {
+        "text": "I learned something that day. A price is a starting offer, not a fixed number.",
+        "tts_style": "calm, warm, slow",
+        "voice": "Kore"
+      },
+      "subtitle_en": "I learned something that day. A price is a starting offer, not a fixed number.",
+      "seed": 1010
+    }
+  ]
+}

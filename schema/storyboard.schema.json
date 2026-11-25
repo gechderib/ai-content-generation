@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/the-starting-price/storyboard.schema.json",
+  "title": "Storyboard",
+  "description": "The contract between every pipeline stage.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "title",
+    "audience",
+    "intent",
+    "language",
+    "style_block",
+    "character_sheet",
+    "music",
+    "end_card",
+    "shots"
+  ],
+  "properties": {
+    "version": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "audience": { "type": "string", "minLength": 1 },
+    "intent": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 1 },
+    "style_block": { "type": "string", "minLength": 1 },
+    "character_sheet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "supporting", "reference_image"],
+      "properties": {
+        "description": { "type": "string", "minLength": 1 },
+        "supporting": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "reference_image": { "type": "string", "minLength": 1 }
+      }
+    },
+    "music": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caption", "bpm", "instrumental", "seed"],
+      "properties": {
+        "caption": { "type": "string", "minLength": 1 },
+        "bpm": { "type": "number", "exclusiveMinimum": 0 },
+        "key": { "type": "string", "minLength": 1 },
+        "instrumental": { "type": "boolean" },
+        "seed": { "type": "integer" }
+      }
+    },
+    "end_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "duration_s"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "duration_s": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "reason",
+          "duration_s",
+          "shot_type",
+          "image_prompt",
+          "motion_prompt",
+          "narration",
+          "subtitle_en",
+          "seed"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^s[0-9]{2,}$" },
+          "reason": { "type": "string", "minLength": 1 },
+          "duration_s": { "type": "number", "exclusiveMinimum": 0 },
+          "shot_type": { "type": "string", "minLength": 1 },
+          "image_prompt": { "type": "string", "minLength": 1 },
+          "motion_prompt": { "type": "string", "minLength": 1 },
+          "overlay_text": { "type": ["string", "null"] },
+          "narration": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["text", "voice"],
+            "properties": {
+              "text": { "type": "string", "minLength": 1 },
+              "tts_style": { "type": "string" },
+              "voice": { "type": "string", "minLength": 1 }
+            }
+          },
+          "subtitle_en": { "type": "string", "minLength": 1 },
+          "seed": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
