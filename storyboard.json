@@ -30,7 +30,7 @@
       "motion_prompt": "slow gentle push-in, soft dust in the light",
       "overlay_text": null,
       "narration": {
-        "text": "ልጅ እያለሁ እናቴ በከተማችን ወዳለው የትናንሽ ሱቆች መንገድ ወሰደችኝ።",
+        "text": "ልጅ እያለሁ እናቴ ልብስ ልትገዛልኝ በከተማችን ወዳሉ ትናንሽ ሱቆች ወሰደችኝ።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -46,7 +46,7 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": null,
       "narration": {
-        "text": "የትኛውን እንደምፈልግ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ አመለከትኩ።",
+        "text": "ወደ አንዱ ሱቅ ከገባን በሗላ የትኛውን እንደምፈልግ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ አመለከትኩ።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -78,7 +78,7 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": "300 ETB",
       "narration": {
-        "text": "እናቴ ሦስት መቶ አለች።",
+        "text": "እናቴ ሦስት መቶ ያዋጣሃል አለችው።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -94,7 +94,7 @@
       "motion_prompt": "slow pull-back, soft light",
       "overlay_text": null,
       "narration": {
-        "text": "መሬት ተከፍታ ብትውጠኝ ተመኘሁ።",
+        "text": "ወየዉ ጉዴ መሬት ተከፍታ ብትውጠኝ ተመኘሁ።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -110,7 +110,7 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": null,
       "narration": {
-        "text": "አይቻልም አለ ባለሱቁ።",
+        "text": "ኧረ ማዘርየ ከቤቱም አንደዚህ ኣይመጣ አለ ባለሱቁ።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -126,7 +126,7 @@
       "motion_prompt": "slow gentle track following her, soft wind",
       "overlay_text": null,
       "narration": {
-        "text": "እንግዲያው ልሂድ አለች እናቴ፤ ወደ በሩም ዞረች።",
+        "text": "በል እንግዲያውስ ልሂድ አለች እናቴ፤ ወደ በሩ እያማተረች።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -142,7 +142,7 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": "1000 ETB",
       "narration": {
-        "text": "ሺህ ብር ብሎ ጠራት፤ እሷ ግን ራሷን ነቀነቀች።",
+        "text": "ባለሱቁም ማዘር በቃ አንድ ሺህ ብር ይዉሰዱት ብሎ ጠራት፤ እሷ ግን ራሷን ነቀነቀች።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
@@ -174,11 +174,11 @@
       "motion_prompt": "slow pull-back, soft warm light",
       "overlay_text": null,
       "narration": {
-        "text": "በዚያ ቀን አንድ ነገር ተማርኩ፤ ዋጋ መነሻ እንጂ ቋሚ ቁጥር አይደለም።",
+        "text": "በዚያ ቀን አንድ ነገር ተማርኩ። በይሉኝታ አንድ ነገር ማጣት ጥሩ አይደለም፤ ደግነትም እንኳ አይደለም።",
         "tts_style": "calm, warm, slow",
         "voice": "Charon"
       },
-      "subtitle_en": "I learned something that day. A price is a starting offer, not a fixed number.",
+      "subtitle_en": "I learned something that day. Being ashamed, and losing because of it, is not good. It is not even kindness.",
       "seed": 1010
     }
   ]

@@ -19,6 +19,14 @@ from .schema_validate import load_storyboard
 
 OUTPUT_PATH = config.OUTPUTS_DIR / "final" / "radio_cut.mp4"
 
+# A natural breathing pause between lines, not the shot's planned screen time.
+# timing.json's effective_duration_s (used by the later shots/assemble stages)
+# stretches each shot to at least its planned duration_s, because real visuals
+# will eventually fill that time. The radio cut has no visuals yet, so padding
+# to that same length just inserts a long silence between sentences and makes
+# the story drag. Here we pace on the narration's own length instead.
+GAP_S = 0.4
+
 
 def build_ffmpeg_args(audio_paths: list[Path], durations: list[float], total_duration: float, output_path: Path) -> list[str]:
     """Pure: given per-shot narration paths/durations and a total length, build the
@@ -75,8 +83,10 @@ def build_radio_cut(
             raise FileNotFoundError(
                 f"{shot['id']}: narration audio not found at {path} - run `python -m pipeline narration` first"
             )
+        shot_timing = timing_by_id[shot["id"]]
+        narration_duration = shot_timing.get("narration_duration_s") or shot_timing["effective_duration_s"]
         audio_paths.append(path)
-        durations.append(timing_by_id[shot["id"]]["effective_duration_s"])
+        durations.append(round(narration_duration + GAP_S, 3))
 
     total_duration = sum(durations) + storyboard["end_card"]["duration_s"]
 
