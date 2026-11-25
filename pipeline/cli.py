@@ -121,6 +121,30 @@ def run_keyframes(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_shots(args: argparse.Namespace) -> int:
+    from .shots import run as run_shots_stage
+
+    try:
+        run_shots_stage(
+            shot_filter=args.shot, force=args.force, fallback=args.fallback, import_dir=args.import_dir
+        )
+    except Exception as exc:
+        print(f"shots stage failed: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+def run_music(args: argparse.Namespace) -> int:
+    from .music import run as run_music_stage
+
+    try:
+        run_music_stage(force=args.force, fallback=args.fallback, import_dir=args.import_dir)
+    except Exception as exc:
+        print(f"music stage failed: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
     "smoke": run_smoke,
@@ -128,6 +152,8 @@ STAGE_HANDLERS = {
     "radio": run_radio,
     "reference": run_reference,
     "keyframes": run_keyframes,
+    "shots": run_shots,
+    "music": run_music,
 }
 
 
