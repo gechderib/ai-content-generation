@@ -89,3 +89,30 @@ def test_call_with_model_fallback_raises_when_all_unavailable():
 
     with pytest.raises(HttpCallError):
         call_with_model_fallback(["model-a", "model-b"], call_fn)
+
+
+def test_call_with_model_fallback_moves_on_after_exhausted_retries():
+    """A model stuck returning 503 for its whole retry budget is as unusable as a 404."""
+    responses = [_resp(503), _resp(503), _resp(200)]
+    with patch("pipeline.http.requests.request", side_effect=responses), patch("pipeline.http.time.sleep"):
+
+        def call_fn(model):
+            max_attempts = 2 if model == "model-a" else 1
+            return request_with_retry("POST", "https://example.test", max_attempts=max_attempts)
+
+        used_model, result = call_with_model_fallback(["model-a", "model-b"], call_fn)
+        assert used_model == "model-b"
+        assert result.response.status_code == 200
+
+
+def test_call_with_model_fallback_does_not_move_on_after_fatal_error():
+    """A fatal error (bad key/request) fails the same way for every model, so don't try the rest."""
+    calls = []
+
+    def call_fn(model):
+        calls.append(model)
+        raise FatalHttpError("bad key", status_code=401)
+
+    with pytest.raises(FatalHttpError):
+        call_with_model_fallback(["model-a", "model-b"], call_fn)
+    assert calls == ["model-a"]

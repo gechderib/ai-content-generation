@@ -130,12 +130,22 @@ def call_with_model_fallback(
     models: list[str],
     call_fn: Callable[[str], CallResult],
 ) -> tuple[str, CallResult]:
-    """Try each model in order; a 404 moves to the next, anything else propagates."""
+    """Try each model in order.
+
+    A 404 (ModelUnavailableError) moves to the next model, and so does any other
+    HttpCallError that survives its own retries - in practice this is a model
+    stuck returning 429/503 ("high demand") for the whole retry budget, which is
+    unavailable in every way that matters here. A FatalHttpError (400/401/403)
+    propagates immediately instead: a bad key or bad request fails the same way
+    against every model, so trying the rest would only burn quota for nothing.
+    """
     last_exc: Exception | None = None
     for model in models:
         try:
             return model, call_fn(model)
-        except ModelUnavailableError as exc:
+        except FatalHttpError:
+            raise
+        except HttpCallError as exc:
             last_exc = exc
             continue
-    raise HttpCallError(f"all models unavailable: {models}") from last_exc
+    raise HttpCallError(f"all models unavailable: {models}; last error: {last_exc}") from last_exc

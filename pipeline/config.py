@@ -54,15 +54,18 @@ def get_env(key: str) -> str:
 
 
 # --- Gemini API ---------------------------------------------------------
-# Confirmed 2026-11-25 against live ai.google.dev / aistudio.google.com docs: the
-# recommended surface is now the Interactions API, not the older generateContent
-# shape. Model ids below are confirmed current; "gemini-3.7-flash" does not exist
-# (the real prior-stable fallback is gemini-3.6-flash).
+# Confirmed live against the real API on 2026-11-25 (see pipeline/gemini.py):
+# the surface is the Interactions API, not the older generateContent shape.
+# "gemini-3.7-flash" does not exist (the real prior-stable fallback is
+# gemini-3.6-flash); "gemini-3.8-flash-lite" also does not exist (the API
+# itself suggests gemini-3.1-flash-lite). gemini-3.8-flash returned sustained
+# 503 "high demand" during testing - kept as primary since the model id itself
+# is valid, with gemini-3.6-flash as a working fallback (see FAILURES.md).
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta"
 GEMINI_API_REVISION = "2026-05-20"
 GEMINI_TEXT_MODELS = ["gemini-3.8-flash", "gemini-3.6-flash"]  # primary, fallback
-GEMINI_TEXT_LITE_MODEL = "gemini-3.8-flash-lite"
-GEMINI_TTS_MODELS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]  # primary, fallback
+GEMINI_TEXT_LITE_MODEL = "gemini-3.1-flash-lite"
+GEMINI_TTS_MODELS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]  # primary, fallback - both confirmed live
 GEMINI_DEFAULT_VOICE = "Kore"
 
 # --- Cloudflare Workers AI (keyframes) ----------------------------------

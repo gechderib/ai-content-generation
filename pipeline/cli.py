@@ -47,8 +47,24 @@ def run_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_smoke(args: argparse.Namespace) -> int:
+    from .smoke import run_all
+
+    ok = True
+    for r in run_all():
+        model = r.model or "-"
+        latency = f"{r.latency_ms:.0f}ms" if r.latency_ms is not None else "-"
+        print(f"[{r.status.upper():7}] {r.provider:16} model={model:28} latency={latency}")
+        if r.detail:
+            print(f"          {r.detail}")
+        if r.status == "error":
+            ok = False
+    return 0 if ok else 1
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
+    "smoke": run_smoke,
 }
 
 
