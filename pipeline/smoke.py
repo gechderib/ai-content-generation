@@ -56,9 +56,7 @@ def smoke_gemini_tts() -> SmokeResult:
         return SmokeResult("gemini_tts", "skipped", detail=reason)
 
     try:
-        model, result, audio_bytes, mime_type = gemini.generate_speech(
-            config.GEMINI_TTS_MODELS, "Say calmly and slowly: selam"
-        )
+        model, result, audio_bytes, mime_type = gemini.generate_speech(config.GEMINI_TTS_MODELS, "selam")
     except HttpCallError as exc:
         log_call(stage="smoke", shot_id=None, model=config.GEMINI_TTS_MODELS[0], status="error", error=str(exc))
         return SmokeResult("gemini_tts", "error", detail=str(exc))

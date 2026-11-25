@@ -27,8 +27,15 @@ def test_narration_inputs_includes_everything_that_affects_output():
     inputs = narration.narration_inputs(SHOT)
     assert inputs["text"] == "selam"
     assert inputs["voice"] == "Kore"
-    assert inputs["tts_style"] == "calm, warm, slow"
     assert "models" in inputs
+
+
+def test_tts_input_never_speaks_the_style_instruction():
+    # Confirmed live: a "Say calmly and slowly: ..." prefix gets read aloud as
+    # literal content, not followed as a style cue, so it must never reach the
+    # spoken input text.
+    assert narration._tts_input(SHOT) == "selam"
+    assert "calm" not in narration._tts_input(SHOT)
 
 
 def test_generate_shot_narration_writes_file_and_caches(monkeypatch):

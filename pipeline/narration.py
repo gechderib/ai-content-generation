@@ -25,16 +25,21 @@ STAGE = "narration"
 
 
 def _tts_input(shot: dict[str, Any]) -> str:
-    style = shot["narration"].get("tts_style", "").strip()
-    text = shot["narration"]["text"]
-    return f"Say {style}: {text}" if style else text
+    # Checked live on 2026-11-25: the Interactions API has no verified
+    # non-spoken instruction channel for TTS. A "Say calmly and slowly: ..."
+    # prefix is read aloud as literal content, not followed as a style cue,
+    # and the model_output step of a TTS call also rejects system_instruction
+    # outright ("Developer instruction is not enabled for this model"). So the
+    # input is the narration text only; tts_style is kept in storyboard.json as
+    # documented intent for a human (or a future provider that supports it),
+    # but isn't sent to this API. See FAILURES.md.
+    return shot["narration"]["text"]
 
 
 def narration_inputs(shot: dict[str, Any]) -> dict[str, Any]:
     """Everything that determines this shot's narration output - the cache key's basis."""
     return {
         "text": shot["narration"]["text"],
-        "tts_style": shot["narration"].get("tts_style", ""),
         "voice": shot["narration"]["voice"],
         "models": config.GEMINI_TTS_MODELS,
     }

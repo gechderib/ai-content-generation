@@ -30,9 +30,9 @@
       "motion_prompt": "slow gentle push-in, soft dust in the light",
       "overlay_text": null,
       "narration": {
-        "text": "ልጅ እያለሁ እናቴ በከተማችን ወዳሉ ትናንሽ ሱቆች ጎዳና ወሰደችኝ።",
+        "text": "ልጅ እያለሁ እናቴ በከተማችን ወዳለው የትናንሽ ሱቆች መንገድ ወሰደችኝ።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "When I was a kid, my mother took me to a street of small boutiques in our town.",
       "seed": 1001
@@ -46,9 +46,9 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": null,
       "narration": {
-        "text": "የትኛውን እንደምወድ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ ጠቆምኩ።",
+        "text": "የትኛውን እንደምፈልግ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ አመለከትኩ።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "She asked which one I liked. I pointed at a pair of jeans.",
       "seed": 1002
@@ -62,9 +62,9 @@
       "motion_prompt": "very slow push-in, soft light flicker",
       "overlay_text": "2000 ETB",
       "narration": {
-        "text": "ባለሱቁን ዋጋውን ጠየቀችው፤ ሁለት ሺህ ብር አለ።",
+        "text": "ባለሱቁን ስንት እንደሆነ ጠየቀችው፤ ሁለት ሺህ ብር አለ።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "She asked the owner the price. Two thousand birr, he said.",
       "seed": 1003
@@ -78,9 +78,9 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": "300 ETB",
       "narration": {
-        "text": "እናቴ፣ ሦስት መቶ አለች።",
+        "text": "እናቴ ሦስት መቶ አለች።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "My mother said, three hundred.",
       "seed": 1004
@@ -94,9 +94,9 @@
       "motion_prompt": "slow pull-back, soft light",
       "overlay_text": null,
       "narration": {
-        "text": "መሬት ቢውጠኝ ተመኘሁ።",
+        "text": "መሬት ተከፍታ ብትውጠኝ ተመኘሁ።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "I wanted the ground to swallow me.",
       "seed": 1005
@@ -110,9 +110,9 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": null,
       "narration": {
-        "text": "አይቻልም፣ ባለሱቁ አለ።",
+        "text": "አይቻልም አለ ባለሱቁ።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "That's not possible, the owner said.",
       "seed": 1006
@@ -126,9 +126,9 @@
       "motion_prompt": "slow gentle track following her, soft wind",
       "overlay_text": null,
       "narration": {
-        "text": "እንግዲያውስ እሄዳለሁ፣ አለች እናቴ፤ ወደ በሩም ዞረች።",
+        "text": "እንግዲያው ልሂድ አለች እናቴ፤ ወደ በሩም ዞረች።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "Then I'm leaving, said my mother, and she turned to the door.",
       "seed": 1007
@@ -142,9 +142,9 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": "1000 ETB",
       "narration": {
-        "text": "ሺህ ብር ብሎ ተከትሎ ጠራት፤ እሷ ግን ራሷን ነቀነቀች።",
+        "text": "ሺህ ብር ብሎ ጠራት፤ እሷ ግን ራሷን ነቀነቀች።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "One thousand, he called after her. She shook her head.",
       "seed": 1008
@@ -158,9 +158,9 @@
       "motion_prompt": "slow gentle push-in, subtle hand movement",
       "overlay_text": "500 ETB",
       "narration": {
-        "text": "በመጨረሻ ግን በአምስት መቶ ብር ገዛናቸው።",
+        "text": "መጨረሻ ላይ ግን በአምስት መቶ ብር ገዛነው።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "In the end, we bought them for five hundred.",
       "seed": 1009
@@ -176,7 +176,7 @@
       "narration": {
         "text": "በዚያ ቀን አንድ ነገር ተማርኩ፤ ዋጋ መነሻ እንጂ ቋሚ ቁጥር አይደለም።",
         "tts_style": "calm, warm, slow",
-        "voice": "Kore"
+        "voice": "Charon"
       },
       "subtitle_en": "I learned something that day. A price is a starting offer, not a fixed number.",
       "seed": 1010

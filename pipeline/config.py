@@ -66,7 +66,9 @@ GEMINI_API_REVISION = "2026-05-20"
 GEMINI_TEXT_MODELS = ["gemini-3.8-flash", "gemini-3.6-flash"]  # primary, fallback
 GEMINI_TEXT_LITE_MODEL = "gemini-3.1-flash-lite"
 GEMINI_TTS_MODELS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]  # primary, fallback - both confirmed live
-GEMINI_DEFAULT_VOICE = "Kore"
+# gemini-3.8-flash-tts free tier: 10 requests/day (confirmed live via a 429 error
+# naming the exact limit) - narration regenerations should be batched, not iterative.
+GEMINI_DEFAULT_VOICE = "Charon"  # male voice; confirmed callable, not confirmed by ear - listen and swap if wrong
 
 # --- Cloudflare Workers AI (keyframes) ----------------------------------
 # flux-2-klein-4b supports reference-image conditioning (needed for character
