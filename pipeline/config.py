@@ -71,11 +71,20 @@ GEMINI_TTS_MODELS = ["gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]  # pri
 GEMINI_DEFAULT_VOICE = "Charon"  # male voice; confirmed callable, not confirmed by ear - listen and swap if wrong
 
 # --- Cloudflare Workers AI (keyframes) ----------------------------------
-# flux-2-klein-4b supports reference-image conditioning (needed for character
-# consistency) and has a much larger daily free allowance than the 9B variant.
-# Exact model slug is re-verified in pipeline/keyframes.py when that stage is built.
+# Confirmed live on 2026-11-26: the real model slug is "flux-2-klein-4b" (not
+# "flux-2-klein" - that 400s with "No route for that URI"). Cloudflare's own
+# docs don't document this model's multipart body fields at all (schema just
+# says `multipart: {body: object, contentType: string}`, no field names). An
+# uploaded "image" field and a guessed "strength" field were both accepted
+# with 200 OK but the output completely ignored them both times (wrong
+# ethnicity, wrong clothing, wrong art style, unrelated setting) - unlike
+# flux-1-schnell's strict schema (extra fields cause a 400), this endpoint
+# appears to silently drop unrecognized fields rather than use them. So
+# character consistency here comes from repeating character_sheet.description
+# + style_block in every shot's prompt (see keyframes.py), not from real
+# reference-image conditioning. See FAILURES.md.
 CF_API_URL_TEMPLATE = "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/{model}"
-CF_FLUX_PRIMARY_MODEL = "@cf/black-forest-labs/flux-2-klein"
+CF_FLUX_PRIMARY_MODEL = "@cf/black-forest-labs/flux-2-klein-4b"
 CF_FLUX_FALLBACK_MODEL = "@cf/black-forest-labs/flux-1-schnell"
 
 # --- Shared retry policy ------------------------------------------------

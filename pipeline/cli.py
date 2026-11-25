@@ -110,12 +110,24 @@ def run_reference(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_keyframes(args: argparse.Namespace) -> int:
+    from .keyframes import run as run_keyframes_stage
+
+    try:
+        run_keyframes_stage(shot_filter=args.shot, force=args.force)
+    except Exception as exc:
+        print(f"keyframes stage failed: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
     "smoke": run_smoke,
     "narration": run_narration,
     "radio": run_radio,
     "reference": run_reference,
+    "keyframes": run_keyframes,
 }
 
 

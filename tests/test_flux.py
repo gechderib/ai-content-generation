@@ -58,3 +58,42 @@ def test_generate_image_schnell_never_sends_a_seed_field(monkeypatch):
 
     sent_body = mock_req.call_args.kwargs["json"]
     assert "seed" not in sent_body
+
+
+def test_generate_image_klein_decodes_base64(monkeypatch):
+    monkeypatch.setenv("CF_ACCOUNT_ID", "acct")
+    monkeypatch.setenv("CF_API_TOKEN", "tok")
+    raw = b"fake-jpeg-bytes"
+    encoded = base64.b64encode(raw).decode()
+
+    with patch("pipeline.http.requests.request", return_value=_resp(200, {"result": {"image": encoded}})):
+        image_bytes, result = flux.generate_image_klein("a boy")
+
+    assert image_bytes == raw
+    assert result.response.status_code == 200
+
+
+def test_generate_image_klein_sends_form_data_not_json(monkeypatch):
+    # Confirmed live: an explicit Content-Type/JSON body breaks this endpoint -
+    # it must be a plain form body so requests sets its own multipart/urlencoded
+    # Content-Type.
+    monkeypatch.setenv("CF_ACCOUNT_ID", "acct")
+    monkeypatch.setenv("CF_API_TOKEN", "tok")
+    encoded = base64.b64encode(b"x").decode()
+
+    with patch("pipeline.http.requests.request", return_value=_resp(200, {"result": {"image": encoded}})) as mock_req:
+        flux.generate_image_klein("a boy")
+
+    kwargs = mock_req.call_args.kwargs
+    assert kwargs["json"] is None
+    assert kwargs["data"] == {"prompt": "a boy"}
+    assert "Content-Type" not in kwargs["headers"]
+
+
+def test_generate_image_klein_raises_on_missing_image_field(monkeypatch):
+    monkeypatch.setenv("CF_ACCOUNT_ID", "acct")
+    monkeypatch.setenv("CF_API_TOKEN", "tok")
+
+    with patch("pipeline.http.requests.request", return_value=_resp(200, {"result": {}})):
+        with pytest.raises(RuntimeError):
+            flux.generate_image_klein("a boy")
