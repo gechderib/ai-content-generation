@@ -3,7 +3,7 @@
   "title": "The Starting Price",
   "audience": "Young Ethiopians and diaspora friends, watching on phones",
   "intent": "Smile at the embarrassment, recognise their own family, remember that a price is a starting offer",
-  "language": "en",
+  "language": "am",
   "style_block": "warm soft hand-painted illustration, gentle grain, golden afternoon light, small Ethiopian town, no text, no letters, no numbers, vertical-friendly centred composition",
   "character_sheet": {
     "description": "a small boy about 8 years old, short black hair, yellow t-shirt, faded blue shorts, painterly illustration, shown from behind or at a distance, no detailed face",
@@ -30,7 +30,7 @@
       "motion_prompt": "slow gentle push-in, soft dust in the light",
       "overlay_text": null,
       "narration": {
-        "text": "When I was a kid, my mother took me to a street of small boutiques in our town.",
+        "text": "ልጅ እያለሁ እናቴ በከተማችን ወዳሉ ትናንሽ ሱቆች ጎዳና ወሰደችኝ።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -46,7 +46,7 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": null,
       "narration": {
-        "text": "She asked which one I liked. I pointed at a pair of jeans.",
+        "text": "የትኛውን እንደምወድ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ ጠቆምኩ።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -62,7 +62,7 @@
       "motion_prompt": "very slow push-in, soft light flicker",
       "overlay_text": "2000 ETB",
       "narration": {
-        "text": "She asked the owner the price. Two thousand birr, he said.",
+        "text": "ባለሱቁን ዋጋውን ጠየቀችው፤ ሁለት ሺህ ብር አለ።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -78,7 +78,7 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": "300 ETB",
       "narration": {
-        "text": "My mother said, three hundred.",
+        "text": "እናቴ፣ ሦስት መቶ አለች።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -94,7 +94,7 @@
       "motion_prompt": "slow pull-back, soft light",
       "overlay_text": null,
       "narration": {
-        "text": "I wanted the ground to swallow me.",
+        "text": "መሬት ቢውጠኝ ተመኘሁ።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -110,7 +110,7 @@
       "motion_prompt": "slight hand movement, camera static",
       "overlay_text": null,
       "narration": {
-        "text": "That's not possible, the owner said.",
+        "text": "አይቻልም፣ ባለሱቁ አለ።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -126,7 +126,7 @@
       "motion_prompt": "slow gentle track following her, soft wind",
       "overlay_text": null,
       "narration": {
-        "text": "Then I'm leaving, said my mother, and she turned to the door.",
+        "text": "እንግዲያውስ እሄዳለሁ፣ አለች እናቴ፤ ወደ በሩም ዞረች።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -142,7 +142,7 @@
       "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": "1000 ETB",
       "narration": {
-        "text": "One thousand, he called after her. She shook her head.",
+        "text": "ሺህ ብር ብሎ ተከትሎ ጠራት፤ እሷ ግን ራሷን ነቀነቀች።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -158,7 +158,7 @@
       "motion_prompt": "slow gentle push-in, subtle hand movement",
       "overlay_text": "500 ETB",
       "narration": {
-        "text": "In the end, we bought them for five hundred.",
+        "text": "በመጨረሻ ግን በአምስት መቶ ብር ገዛናቸው።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
@@ -174,7 +174,7 @@
       "motion_prompt": "slow pull-back, soft warm light",
       "overlay_text": null,
       "narration": {
-        "text": "I learned something that day. A price is a starting offer, not a fixed number.",
+        "text": "በዚያ ቀን አንድ ነገር ተማርኩ፤ ዋጋ መነሻ እንጂ ቋሚ ቁጥር አይደለም።",
         "tts_style": "calm, warm, slow",
         "voice": "Kore"
       },
