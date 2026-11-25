@@ -33,6 +33,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--draft", action="store_true", help="low-resolution / fast draft mode")
     parser.add_argument("--import-dir", help="import notebook outputs from this directory (shots/music)")
     parser.add_argument("--fallback", action="store_true", help="use the no-GPU fallback (Ken Burns / placeholder bed)")
+    parser.add_argument("--pick", type=int, help="reference stage: choose a candidate by its variant number as the golden reference")
     return parser
 
 
@@ -85,11 +86,36 @@ def run_radio(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_reference(args: argparse.Namespace) -> int:
+    from .reference import generate_candidates, pick
+
+    if args.pick is not None:
+        try:
+            dest = pick(args.pick)
+        except FileNotFoundError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
+        print(f"golden reference set to {dest} (from variant {args.pick})")
+        return 0
+
+    try:
+        paths = generate_candidates(force=args.force)
+    except Exception as exc:
+        print(f"reference stage failed: {exc}", file=sys.stderr)
+        return 1
+    print("Candidates generated. Look at them, then run:")
+    print("  python -m pipeline reference --pick <variant>")
+    for p in paths:
+        print(f"  {p}")
+    return 0
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
     "smoke": run_smoke,
     "narration": run_narration,
     "radio": run_radio,
+    "reference": run_reference,
 }
 
 
