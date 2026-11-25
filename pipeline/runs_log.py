@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .config import RUNS_LOG_PATH
+from . import config
 
 _SECRET_KEY_NAMES = {"api_key", "token", "x-goog-api-key", "authorization", "cf_api_token", "hf_token"}
 
@@ -38,8 +38,10 @@ def log_call(
     cache_key: str | None = None,
     output_path: str | None = None,
     error: str | None = None,
-    path: Path = RUNS_LOG_PATH,
+    path: Path | None = None,
 ) -> None:
+    if path is None:
+        path = config.RUNS_LOG_PATH
     record = {
         "ts": datetime.now(timezone.utc).isoformat(),
         "stage": stage,

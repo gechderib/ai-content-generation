@@ -62,9 +62,34 @@ def run_smoke(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def run_narration(args: argparse.Namespace) -> int:
+    from .narration import run as run_narration_stage
+
+    try:
+        run_narration_stage(shot_filter=args.shot, force=args.force)
+    except Exception as exc:
+        print(f"narration stage failed: {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+def run_radio(args: argparse.Namespace) -> int:
+    from .radio import build_radio_cut
+
+    try:
+        path = build_radio_cut()
+    except Exception as exc:
+        print(f"radio stage failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"radio cut written to {path}")
+    return 0
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
     "smoke": run_smoke,
+    "narration": run_narration,
+    "radio": run_radio,
 }
 
 

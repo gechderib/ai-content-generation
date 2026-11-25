@@ -6,6 +6,5 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 .DS_Store
-outputs/*
-!outputs/*/
-!outputs/*/.gitkeep
+outputs/**
+!outputs/**/.gitkeep
