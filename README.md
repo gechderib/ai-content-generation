@@ -5,7 +5,17 @@ haggles down the price of a pair of jeans in a small Ethiopian town - and
 learns, by the end, that there was nothing to be embarrassed about. Narrated
 in Amharic with English subtitles, set in Debre Tabor, South Gondar.
 
-Made for the IoAcademy "AI-Content Generation: Heritage Short" challenge.
+Made for the TRP2 "AI-Content Generation: Heritage Short" challenge.
+
+## About this project
+
+Built solo by Getachew Derib for the TRP2 "AI-Content Generation:
+Heritage Short" challenge. The story, visual style, and full pipeline
+(storyboard -> narration -> keyframes -> motion -> music -> assembly,
+with content-addressed caching and a real audit log of every API call)
+were designed and implemented end to end — including working through
+five real free-tier GPU dead ends (documented in FAILURES.md) before
+landing on a working hosted-API path for motion.
 
 ## Quickstart
 
