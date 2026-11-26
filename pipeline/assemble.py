@@ -39,7 +39,6 @@ from .cache import hash_file, stage_key
 from .ffmpeg_utils import ffprobe_duration_s, run_ffmpeg
 from .narration import shot_audio_path
 from .schema_validate import load_storyboard
-from .shots import shot_duration_s
 
 STAGE = "assemble"
 FRAME_SIZE = 1024
@@ -49,6 +48,16 @@ ASPECTS = {
     "16x9": (1920, 1080),
 }
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+
+# timing.json's effective_duration_s pads each shot to at least its planned
+# duration_s, a screen-time estimate from storyboard.json written before any
+# narration existed. The narration usually finishes well before that (e.g.
+# 5.25s read vs. a 7.0s plan), so holding the shot open for the full planned
+# length leaves a silent-but-for-music gap between lines. Confirmed too long
+# by ear on the first assembled cut - paced on the narration's own length
+# instead (same idea as radio.py's GAP_S, a fixed small breathing pause
+# rather than the planning estimate).
+SHOT_PAD_S = 0.4
 
 DUCK_THRESHOLD = 0.05
 DUCK_RATIO = 8
@@ -75,10 +84,13 @@ def pick_music_bed() -> Path:
 
 
 def shots_timeline(storyboard: dict[str, Any], timing: dict[str, Any]) -> list[dict[str, Any]]:
+    timing_by_id = {t["id"]: t for t in timing["shots"]}
     entries = []
     start = 0.0
     for shot in storyboard["shots"]:
-        duration = shot_duration_s(shot["id"], timing)
+        t = timing_by_id[shot["id"]]
+        narration_duration = t.get("narration_duration_s")
+        duration = round(narration_duration + SHOT_PAD_S, 3) if narration_duration is not None else t["effective_duration_s"]
         entries.append(
             {
                 "id": shot["id"],
