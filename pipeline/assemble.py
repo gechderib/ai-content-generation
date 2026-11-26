@@ -53,11 +53,14 @@ FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 # every clip it generates) is wide enough (measured live: ~40% of frame
 # width) that cropping it out would mean either losing a large slice of each
 # shot's right side or stretching the whole frame to compensate - both worse
-# than just hiding it. Blurred out in place instead, at FRAME_SIZE scale
-# (measured on a real Magic Hour clip, with margin). Harmless on non-Magic
-# Hour sources (fallback Ken Burns clips, real Wan 2.2 imports) - just blurs
-# an empty background corner there.
-WATERMARK_CROP = (560, 860, 464, 164)  # x, y, width, height
+# than just hiding it. Blurred out in place instead, at FRAME_SIZE scale.
+# Measured directly on a real Magic Hour clip (1024x1024): the wordmark
+# itself only spans y=939-999 (60px tall); this box adds a small margin
+# around that rather than the much taller first guess, which was blurring
+# real picture (the mother's dress hem/shoes) well above the actual logo.
+# Harmless on non-Magic Hour sources (fallback Ken Burns clips, real Wan 2.2
+# imports) - just blurs an empty background corner there.
+WATERMARK_CROP = (560, 915, 464, 109)  # x, y, width, height
 
 # timing.json's effective_duration_s pads each shot to at least its planned
 # duration_s, a screen-time estimate from storyboard.json written before any
