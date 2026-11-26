@@ -45,8 +45,7 @@
       "reason": "The want: the boy spots the jeans",
       "duration_s": 6,
       "shot_type": "medium",
-      "image_prompt": "the small boy seen from behind pointing at a pair of blue jeans hanging in a boutique doorway",
-      "motion_prompt": "slow gentle push-in, fixed framing",
+"image_prompt": "the small boy seen from behind pointing at a pair of blue jeans hanging in a boutique doorway, a bicycle leaning against the wall nearby",      "motion_prompt": "slow gentle push-in, fixed framing",
       "overlay_text": null,
       "narration": {
         "text": "ወደ አንዱ ሱቅ ከገባን በኋላ የትኛውን እንደምፈልግ ጠየቀችኝ፤ አንድ ጂንስ ሱሪ አመለከትኩ።",
