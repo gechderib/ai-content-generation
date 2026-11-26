@@ -145,6 +145,19 @@ def run_music(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_assemble(args: argparse.Namespace) -> int:
+    from .assemble import run as run_assemble_stage
+
+    try:
+        outputs = run_assemble_stage(force=args.force)
+    except Exception as exc:
+        print(f"assemble stage failed: {exc}", file=sys.stderr)
+        return 1
+    for aspect, path in outputs.items():
+        print(f"  {aspect}: {path}")
+    return 0
+
+
 STAGE_HANDLERS = {
     "validate": run_validate,
     "smoke": run_smoke,
@@ -154,6 +167,7 @@ STAGE_HANDLERS = {
     "keyframes": run_keyframes,
     "shots": run_shots,
     "music": run_music,
+    "assemble": run_assemble,
 }
 
 
