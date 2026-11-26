@@ -49,6 +49,7 @@ def request_with_retry(
     url: str,
     *,
     headers: dict[str, str] | None = None,
+    params: dict[str, Any] | None = None,
     json_body: dict[str, Any] | None = None,
     data: Any = None,
     files: Any = None,
@@ -63,7 +64,7 @@ def request_with_retry(
     for attempt in range(1, max_attempts + 1):
         try:
             resp = requests.request(
-                method, url, headers=headers, json=json_body, data=data, files=files, timeout=timeout
+                method, url, headers=headers, params=params, json=json_body, data=data, files=files, timeout=timeout
             )
         except requests.exceptions.RequestException as exc:
             last_exc = exc

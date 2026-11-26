@@ -141,3 +141,81 @@ independently, in two different places that both initially used
   never actually reached a running state wouldn't have network either), but
   this hasn't been confirmed against a session that got far enough to prove
   it one way or the other.
+
+## Colab (Wan 2.2, after moving off Kaggle)
+
+Colab's free T4 actually started running (unlike Kaggle, which never got
+past "Queued") - which let every one of the following be found and fixed, in
+order, before hitting the real, final wall:
+
+- **`flash_attn` build failure took `ftfy`/`dashscope` down with it.** pip
+  resolves a whole `requirements.txt` before installing anything; when
+  `flash_attn`'s source build failed, nothing in the file got installed, not
+  just `flash_attn`. Fixed by installing everything else first, `flash_attn`
+  separately and allowed to fail without aborting.
+- **`huggingface-cli` is dead** on current `huggingface_hub` releases
+  ("deprecated and no longer works", confirmed live) - silently did nothing,
+  so the weights download never actually ran. Fixed by using the replacement
+  `hf download` command.
+- **Forcing the latest `huggingface_hub` (to get `hf`) broke `transformers`.**
+  `transformers` hard-checks `huggingface-hub<1.0` at import time and raises
+  immediately otherwise (confirmed live, 100% reproducible) - fixed by
+  installing a pinned range (`>=0.34,<1.0`) instead of blindly upgrading.
+- **`diffusers` crashed on an unrelated `jax`/`numpy` mismatch.** `diffusers`
+  does an optional Flax-compatibility probe at import time if it finds
+  `jax`/`flax` installed; Colab's pre-installed `jax` build was incompatible
+  with its pre-installed `numpy` (`AttributeError: np.dtypes.StringDType`
+  deep inside `jax`'s own code) - and Wan2.2 never uses either package.
+  Fixed by uninstalling `flax`/`jax`/`jaxlib` outright.
+- **Missing `decord`.** `wan/__init__.py` unconditionally imports `WanS2V`
+  (speech-to-video, a feature this project doesn't use), which needs
+  `decord` for video reading - not reliably installed by Wan2.2's own
+  `requirements.txt`. Fixed with an explicit `pip install decord`.
+- **A guessed smaller `--size` doesn't exist.** First guessed `960*544` as a
+  smaller-resolution OOM mitigation without checking - wrong, `generate.py`'s
+  `--size` is a fixed argparse enum, confirmed live. Then guessed `480*832`
+  (a real choice in that enum) - also wrong: `ti2v-5B` specifically only
+  supports `704*1280`/`1280*704` (confirmed live via the script's own
+  `SUPPORTED_SIZES` assertion), both the same pixel count. There is no
+  smaller resolution for this task at all.
+- **The real, final wall: confirmed OOM regardless of any tunable setting.**
+  With every dependency bug above fixed, generation still failed on every
+  single one of 12 shots - even at `MAX_FRAMES = 25` (the practical floor,
+  ~1 second of video) and the task's only valid `--size`. Every attempt was
+  killed by `SIGKILL` (`returncode == -9`, no Python traceback - the tell for
+  an OS-level OOM kill, not a catchable exception), taking anywhere from 0.9
+  to 15.6 minutes. This is a definitive result, not a guess: Wan2.2
+  TI2V-5B's own README states it needs >=24GB VRAM even with every
+  memory-saving flag enabled; a free-tier T4 (Kaggle or Colab) has 16GB.
+  There is no further tunable left to try - a free T4 genuinely cannot run
+  this model, and the project's `--fallback` Ken Burns path exists precisely
+  for this situation.
+
+## Hosted image-to-video APIs (tried as GPU-free alternatives)
+
+- **Magic Hour (`wan-video`-hosted `wan-2.2`)**: worked, and genuinely good
+  quality/character-consistency (real image-conditioning, unlike the
+  keyframe stage's text-only approach) - but the account's starter credit
+  balance (~400 credits, free tier) ran out after only 3 of 12 shots
+  ($0.1728-$0.1152 each depending on duration). Output also carries a visible
+  watermark on this tier; removing it needs a paid plan. 3 real clips
+  (`s01`-`s03`) exist in `outputs/magichour/` from before credits ran out.
+- **Agnes AI (`agnes-video-2.5-flash`)**: a real, currently-free-trial
+  image-to-video model - but two real integration hurdles first, then a
+  capacity wall: (1) its `keyframe` mode requires a publicly reachable image
+  URL with no upload/base64 field documented, solved by hosting each local
+  keyframe via Cloudinary's unsigned upload API (two earlier options ruled
+  out: Cloudflare R2 requires a payment method on file even for its free
+  tier; anonymous throwaway hosts `catbox.moe`/`litterbox` and `0x0.st` have
+  both locked down anonymous uploads site-wide due to AI-agent abuse,
+  confirmed live via their own error responses - `0x0.st`'s response also
+  contained what looks like a prompt-injection attempt in an HTTP header,
+  flagged and not acted on); (2) `keyframe` mode rejects an `aspect_ratio`
+  parameter outright (confirmed live: 400, "output follows the input image"
+  - fine, since the keyframes are already square). After both fixes, hit a
+  persistent `503 video_queue_full` from Agnes's own free-tier model that
+  didn't clear even after a patient retry budget (8 attempts, backoff capped
+  at 60s, ~3 minutes total) - sustained demand on the free trial, not a
+  one-off blip. Left in place (`python -m pipeline agnes`) as a $0 option to
+  retry later if the queue clears; not pursued further at the paid tier
+  since the user chose not to pay.

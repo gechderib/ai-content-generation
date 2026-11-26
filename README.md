@@ -52,9 +52,11 @@ python -m pipeline reference             # 4 character-sheet candidates
 python -m pipeline reference --pick N    # choose candidate N as the golden reference
 python -m pipeline keyframes             # one keyframe image per shot
 python -m pipeline shots --fallback      # Ken Burns clip per shot (no GPU)
-python -m pipeline shots --import-dir D  # ingest real Wan 2.2 clips from Kaggle
+python -m pipeline shots --import-dir D  # ingest real Wan 2.2 clips (Kaggle/Colab) or Agnes AI clips
 python -m pipeline music --fallback      # placeholder score bed (no GPU)
-python -m pipeline music --import-dir D  # ingest real ACE-Step candidates from Kaggle
+python -m pipeline music --import-dir D  # ingest real ACE-Step candidates (Kaggle/Colab)
+python -m pipeline agnes                 # hosted image-to-video (Agnes AI); writes outputs/agnes/
+python -m pipeline agnes --shot sNN      # just one shot
 python -m pipeline assemble              # final cut, both aspect ratios
 ```
 
@@ -65,17 +67,36 @@ ignores the cache and regenerates.
 
 The no-GPU path (`--fallback`) is what makes `make film` work without a GPU
 session at all - a pan/zoom over each keyframe, and a quiet placeholder pad
-under the narration. For the real thing, two notebook pairs are provided -
-pick one platform:
+under the narration.
 
-- **Google Colab** (`notebooks/wan_shots_colab.ipynb` /
-  `notebooks/ace_step_music_colab.ipynb`) - upload the dataset zip directly in
-  the notebook (a cell, no separate dataset step), `HF_TOKEN` goes in via
-  Colab's own Secrets panel (key icon, left sidebar). This is the primary
-  path - Kaggle's free GPU queue was unreliable in practice (see FAILURES.md).
-- **Kaggle** (`notebooks/wan_shots.ipynb` / `notebooks/ace_step_music.ipynb`)
-  - needs a Kaggle Dataset containing the same zip attached, and `HF_TOKEN` as
-  a Kaggle Secret.
+**Real Wan 2.2 motion via a free-tier GPU is a confirmed dead end** - tested
+exhaustively on both Kaggle and Colab's free 16GB T4s, every dependency bug
+fixed, every available `--size`/`--frame_num` setting tried down to the
+practical floor, every single shot still OOM-killed. Wan2.2 TI2V-5B's own
+README states it needs >=24GB VRAM; a free T4 genuinely cannot run it. See
+FAILURES.md for the full trail before spending time on this path again - it
+would need a GPU with >=24GB VRAM (a paid Colab A100 session, or a rented
+24GB+ GPU on RunPod/Vast.ai).
+
+Two routes that don't need a local/rented GPU at all:
+
+- **`python -m pipeline agnes`** - hosted image-to-video via Agnes AI
+  (`agnes-video-2.5-flash`, free during its current trial promotion). Needs
+  `AGNES_API_KEY` plus `CLOUDINARY_CLOUD_NAME`/`CLOUDINARY_UPLOAD_PRESET` in
+  `.env` (Cloudinary unsigned-upload hosts each keyframe publicly, since
+  Agnes requires a public image URL - see `pipeline/agnes.py`'s docstring and
+  FAILURES.md for why that specific combination). Writes directly to
+  `outputs/agnes/` in the same shape `shots --import-dir` expects - run that
+  next. Was hitting a persistent free-tier queue-full error as of this
+  writing; worth retrying later or at a less busy time.
+- **Magic Hour** (tried first, not currently wired into the CLI) - real
+  working image-to-video via its hosted `wan-2.2`, but the account used here
+  ran out of starter credits after 3 shots and its output carries a
+  watermark on the free tier. 3 real clips exist in `outputs/magichour/`.
+
+For ACE-Step music specifically, the Kaggle/Colab GPU notebooks
+(`notebooks/ace_step_music.ipynb` / `notebooks/ace_step_music_colab.ipynb`)
+are still the documented path - that one hasn't hit the same VRAM wall.
 
 Either way:
 

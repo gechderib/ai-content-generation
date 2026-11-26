@@ -1,3 +1,4 @@
 requests>=2.31
 jsonschema>=4.21
 pytest>=7.4
+magic-hour>=0.78.1  # optional: only needed for `python -m pipeline magichour` (hosted image-to-video)

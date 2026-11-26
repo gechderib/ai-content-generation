@@ -123,11 +123,16 @@ def import_shot_clip(shot: dict[str, Any], import_dir: Path, gpu_log: dict[str, 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(src.read_bytes())
 
-    gpu_minutes = (gpu_log.get(shot_id) or {}).get("gpu_minutes")
+    # gpu_log entries normally come from the Kaggle/Colab notebooks (GPU
+    # minutes, $0 - the GPU itself is free-tier), but a hosted API source
+    # (see magichour.py) writes model/cost_usd instead - read both so either
+    # source is attributed correctly in runs.jsonl.
+    entry = gpu_log.get(shot_id) or {}
     log_call(
-        stage=STAGE, shot_id=shot_id, model="Wan2.2-TI2V-5B", status="ok",
+        stage=STAGE, shot_id=shot_id, model=entry.get("model", "Wan2.2-TI2V-5B"), status="ok",
         params={"motion_prompt": shot["motion_prompt"], "source": str(src)},
-        cache_key=key, output_path=str(path), gpu_minutes=gpu_minutes, cost_usd=0.0,
+        cache_key=key, output_path=str(path),
+        gpu_minutes=entry.get("gpu_minutes"), cost_usd=entry.get("cost_usd", 0.0),
     )
     print(f"[imported]    {shot_id} shot ({path.name})")
     return path

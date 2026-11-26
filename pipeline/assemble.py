@@ -49,6 +49,16 @@ ASPECTS = {
 }
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
+# Magic Hour's free-tier watermark ("Magic Hour" wordmark, bottom-right of
+# every clip it generates) is wide enough (measured live: ~40% of frame
+# width) that cropping it out would mean either losing a large slice of each
+# shot's right side or stretching the whole frame to compensate - both worse
+# than just hiding it. Blurred out in place instead, at FRAME_SIZE scale
+# (measured on a real Magic Hour clip, with margin). Harmless on non-Magic
+# Hour sources (fallback Ken Burns clips, real Wan 2.2 imports) - just blurs
+# an empty background corner there.
+WATERMARK_CROP = (560, 860, 464, 164)  # x, y, width, height
+
 # timing.json's effective_duration_s pads each shot to at least its planned
 # duration_s, a screen-time estimate from storyboard.json written before any
 # narration existed. The narration usually finishes well before that (e.g.
@@ -174,13 +184,17 @@ def build_main_track(storyboard: dict[str, Any], timeline: list[dict[str, Any]],
         clip = pick_shot_clip(shot["id"])
         narration = shot_audio_path(shot)
         seg_path = work_dir / f"seg_{shot['id']}.mp4"
+        wm_x, wm_y, wm_w, wm_h = WATERMARK_CROP
         run_ffmpeg(
             [
                 "-stream_loop", "-1", "-i", str(clip),
                 "-i", str(narration),
                 "-filter_complex",
                 f"[0:v]scale={FRAME_SIZE}:{FRAME_SIZE}:force_original_aspect_ratio=increase,"
-                f"crop={FRAME_SIZE}:{FRAME_SIZE},setsar=1,fps={FPS}[v];"
+                f"crop={FRAME_SIZE}:{FRAME_SIZE},setsar=1,fps={FPS}[base];"
+                f"[base]split=2[base1][base2];"
+                f"[base1]crop={wm_w}:{wm_h}:{wm_x}:{wm_y},boxblur=20:2[wmblur];"
+                f"[base2][wmblur]overlay={wm_x}:{wm_y}[v];"
                 f"[1:a]aformat=sample_rates=44100:channel_layouts=mono,apad=whole_dur={entry['duration']}[a]",
                 "-map", "[v]", "-map", "[a]",
                 "-t", str(entry["duration"]),

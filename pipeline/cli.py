@@ -20,6 +20,8 @@ STAGES = [
     "radio",
     "music",
     "shots",
+    "agnes",
+    "magichour",
     "assemble",
     "all",
 ]
@@ -145,6 +147,30 @@ def run_music(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_agnes(args: argparse.Namespace) -> int:
+    from .agnes import run as run_agnes_stage
+
+    try:
+        output_dir = run_agnes_stage(shot_filter=args.shot)
+    except Exception as exc:
+        print(f"agnes stage failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"Clips written to {output_dir}")
+    return 0
+
+
+def run_magichour(args: argparse.Namespace) -> int:
+    from .magichour import run as run_magichour_stage
+
+    try:
+        output_dir = run_magichour_stage(shot_filter=args.shot)
+    except Exception as exc:
+        print(f"magichour stage failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"Clips written to {output_dir}")
+    return 0
+
+
 def run_assemble(args: argparse.Namespace) -> int:
     from .assemble import run as run_assemble_stage
 
@@ -167,6 +193,8 @@ STAGE_HANDLERS = {
     "keyframes": run_keyframes,
     "shots": run_shots,
     "music": run_music,
+    "agnes": run_agnes,
+    "magichour": run_magichour,
     "assemble": run_assemble,
 }
 
