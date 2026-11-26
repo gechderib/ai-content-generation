@@ -63,16 +63,28 @@ ignores the cache and regenerates.
 
 ## Upgrading to real motion and music
 
-The no-GPU path (`--fallback`) is what makes `make film` work without a
-Kaggle session at all - a pan/zoom over each keyframe, and a quiet placeholder
-pad under the narration. For the real thing:
+The no-GPU path (`--fallback`) is what makes `make film` work without a GPU
+session at all - a pan/zoom over each keyframe, and a quiet placeholder pad
+under the narration. For the real thing, two notebook pairs are provided -
+pick one platform:
 
-1. Zip `storyboard.json` + `outputs/timing.json` + `outputs/keyframes/` and
-   upload it as a Kaggle Dataset.
-2. Run `notebooks/wan_shots.ipynb` (Wan 2.2 TI2V-5B image-to-video, needs a
-   GPU and an `HF_TOKEN` Kaggle Secret) and `notebooks/ace_step_music.ipynb`
-   (ACE-Step 1.5 music, needs a GPU) - see the markdown cell at the top of
-   each for exact setup.
+- **Google Colab** (`notebooks/wan_shots_colab.ipynb` /
+  `notebooks/ace_step_music_colab.ipynb`) - upload the dataset zip directly in
+  the notebook (a cell, no separate dataset step), `HF_TOKEN` goes in via
+  Colab's own Secrets panel (key icon, left sidebar). This is the primary
+  path - Kaggle's free GPU queue was unreliable in practice (see FAILURES.md).
+- **Kaggle** (`notebooks/wan_shots.ipynb` / `notebooks/ace_step_music.ipynb`)
+  - needs a Kaggle Dataset containing the same zip attached, and `HF_TOKEN` as
+  a Kaggle Secret.
+
+Either way:
+
+1. Zip `storyboard.json` + `outputs/timing.json` + `outputs/keyframes/`
+   (Colab: upload that zip directly in the notebook's upload cell; Kaggle:
+   upload it as a Kaggle Dataset first, then attach it to the notebook).
+2. Run the Wan 2.2 notebook (image-to-video, needs a GPU) and the ACE-Step
+   notebook (music, needs a GPU) - see the markdown cell at the top of each
+   for exact setup.
 3. Download each notebook's output zip, unzip locally, then:
    ```
    python -m pipeline shots --import-dir path/to/unzipped/clips
