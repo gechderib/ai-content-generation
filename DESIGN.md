@@ -1,5 +1,48 @@
 # Design
 
+## Design process: empathize, define, prototype, test, iterate
+
+This wasn't a one-pass "write a prompt, render a film" project - each phase
+below is a real stage this project actually went through, in order, with a
+concrete artifact or decision at each step.
+
+1. **Empathize.** The story is a real childhood memory, not an invented
+   premise - the filmmaker lived the embarrassment the boy feels. The
+   setting (Debre Tabor, see below) and the bargaining ritual itself are
+   drawn from lived, specific experience rather than a generic "Africa"
+   stock scene.
+2. **Define.** `storyboard.json`'s `audience`/`intent` fields state the
+   target explicitly: young Ethiopians and diaspora friends, watching on
+   phones, who should recognise their own family in it and come away
+   smiling rather than lectured at. Two implied personas follow from that:
+   a diaspora viewer scrolling Shorts who hasn't bargained in person in
+   years, and a viewer still in Ethiopia for whom this is an everyday
+   ritual, not a novelty - both need the *place* to read as real and
+   specific, which is why Addis Ababa and "a generic village" were both
+   explicitly ruled out (see "Why Debre Tabor" below).
+3. **Prototype, cheaply, before committing to visuals.** The `radio` cut
+   (`python -m pipeline radio`) - narration and music only, no images or
+   motion at all - exists specifically so pacing could be judged by ear
+   before spending any image/video generation on it. This caught a real
+   pacing bug (shots held open with long dead air between lines) at the
+   cheapest possible point in the pipeline, before 12 keyframes and 12
+   video clips had been generated against a flawed pacing model (see
+   FAILURES.md, "Pacing").
+4. **Test, then iterate, against the actual visual output.** Several
+   concrete design decisions were corrected only after seeing a real
+   generated keyframe, not decided upfront: the shop owner's clothing was
+   originally too formal (a waistcoat read as "wrong trade, wrong town")
+   and was corrected to a plain shirt after an early keyframe pass; the
+   boy's trousers were changed from shorts to full-length after shorts
+   read as making him look younger than the story needs. Both are recorded
+   in the character sheet below as decisions, but both started as
+   problems only visible once there was an actual image to judge.
+5. **Test with the real, intended audience.** Once assembled, the film was
+   shown to its two most relevant real audiences: the general public (via
+   a public YouTube Shorts post) and the one person in a position to judge
+   whether the memory itself reads true - the filmmaker's mother, the
+   subject of the story. Full writeup in `AUDIENCE_TESTING.md`.
+
 ## Story
 
 A boy remembers, as a child, going with his mother to buy a pair of jeans in
