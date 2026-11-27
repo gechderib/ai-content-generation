@@ -128,8 +128,10 @@ this transparently replaces the fallback material with no code changes.
 ## Documentation
 
 - `DESIGN.md` - the creative brief: story, visual style, character sheet, why Debre Tabor
+- `AUDIENCE_TESTING.md` - real reactions: public YouTube Shorts reception and the subject of the memory's own response
 - `ARCHITECTURE.md` - how the pipeline is built: contracts, caching, retries, assemble's filter graph
 - `EXPERIMENTS.md` - what was tried, what was picked, and why
 - `FAILURES.md` - real errors hit against the live APIs/tools, and their fixes
-- `COSTS.md` - what every stage actually cost (spoiler: $0 so far, free tiers only)
+- `MEASUREMENT.md` - quantitative read of `runs.jsonl`: per-stage success rate, latency, and real retry/fallback instances
+- `COSTS.md` - what every stage actually cost (spoiler: $0 so far except $1.90 for real Wan 2.2 motion via Magic Hour)
 - `ETHICS.md` - consent record for the real people referenced by this film

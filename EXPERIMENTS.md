@@ -78,6 +78,25 @@ comparison pass was run (ffmpeg's single-pass `loudnorm` was used, not the
 two-pass measure-then-normalise variant), so the final figure is an estimate
 rather than a verified exact match.
 
+## Motion generation: three routes, compared
+
+Three real image-to-video routes were tried, in this order, each abandoned
+or kept for a concrete, measured reason (full narrative in `FAILURES.md`;
+per-shot cost figures in `MEASUREMENT.md`):
+
+| route | cost | shots completed | reliability | watermark | why kept/dropped |
+|---|---|---:|---|---|---|
+| Wan 2.2 TI2V-5B, free GPU (Kaggle + Colab T4, 16GB) | $0 | 0 / 12 | 0% - OOM-killed (`SIGKILL`) on every attempt, at every `--frame_num` down to the practical floor | n/a | **Dropped.** Confirmed hardware wall, not a bug: the model's own README states >=24GB VRAM; a free T4 has 16GB. No smaller `--size` exists for this task to fall back to. |
+| Agnes AI hosted API (`agnes-video-2.5-flash`, free trial) | $0 | 0 / 12 | 0% - persistent `503 video_queue_full` even after 8 retries at a 60s backoff cap | none (not reached) | **Dropped (for now).** Integration itself works end-to-end (confirmed via its own specific 400/503 responses, not silent failures) - blocked by the service's own free-tier capacity, not by this project's code. Left wired in (`python -m pipeline agnes`) as a $0 retry-later option. |
+| Magic Hour hosted API (`wan-2.2`, 480p) | $1.90 total (see `MEASUREMENT.md`) | 12 / 12 | 100% - every attempted shot succeeded | yes, on free tier | **Kept.** Only route that produced real, working motion for all 12 shots. Cost was absorbed across 6 free-credit accounts (~400 credits/account, 2-3 shots each) rather than paid outright. Watermark fixed separately (see FAILURES.md's blur-patch entry) rather than switching providers again. |
+
+The pattern across all three: free-tier GPU compute (Wan 2.2) failed on a
+hard resource ceiling no amount of debugging could fix, while free-tier
+*hosted-API* compute (Agnes, Magic Hour) failed or succeeded on each
+provider's own account/capacity limits - a meaningfully different failure
+mode, and the reason the second kind was worth retrying across multiple
+routes/accounts while the first wasn't.
+
 ## Music candidate (pending)
 
 `storyboard.json`'s `music` block (caption/bpm/instrumental/seed) was written
